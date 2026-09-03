@@ -442,10 +442,14 @@
           : "";
         const gv = item.GIANGVIEN || item.TenGiangVien || "Chưa cập nhật";
         const hinhThuc = item.THUOCTINH_TEN || "";
+        const color = PKAIcs.getSubjectColor(tenHocPhan);
 
         return `
-          <div class="w-card-item">
-            <div class="w-card-name">${tenHocPhan}</div>
+          <div class="w-card-item" style="border-left-color: ${color.hex};">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+              <div class="w-card-name">${tenHocPhan}</div>
+              <span style="width:8px; height:8px; border-radius:50%; background:${color.hex}; flex-shrink:0; margin-top:4px;" title="Màu lịch: ${color.name}"></span>
+            </div>
             ${tenLop ? `<div class="w-card-sub">${tenLop} ${hinhThuc ? `· <span class="gold">${hinhThuc}</span>` : ""}</div>` : ""}
             <div class="w-card-details">
               <div>Thời gian: <strong>${thuHoc}</strong> · <span class="gold">${tiet}</span> ${gio ? `(${gio})` : ""}</div>

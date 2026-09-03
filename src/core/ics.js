@@ -1,4 +1,27 @@
 const PKAIcs = (function () {
+  // Bảng màu Google & Apple Calendar chuẩn
+  const PALETTE = [
+    { name: "tomato", hex: "#D50000" },      // Đỏ cà chua
+    { name: "tangerine", hex: "#F4511E" },   // Cam san hô
+    { name: "banana", hex: "#F6BF26" },      // Vàng chuối
+    { name: "basil", hex: "#0B8043" },       // Xanh lục
+    { name: "peacock", hex: "#039BE5" },     // Xanh da trời
+    { name: "blueberry", hex: "#3F51B5" },   // Xanh dương đậm
+    { name: "grape", hex: "#8E24AA" },       // Tím nho
+    { name: "flamingo", hex: "#E67C73" },    // Hồng flamingo
+    { name: "sage", hex: "#33B679" },        // Xanh sage
+    { name: "lavender", hex: "#7986CB" }     // Tím oải hương
+  ];
+
+  function getSubjectColor(subjectName = "") {
+    let hash = 0;
+    for (let i = 0; i < subjectName.length; i++) {
+      hash = subjectName.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const idx = Math.abs(hash) % PALETTE.length;
+    return PALETTE[idx];
+  }
+
   function parseDateStr(str) {
     if (!str) return null;
     const match = str.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
@@ -42,6 +65,9 @@ const PKAIcs = (function () {
       const tiet = item.TIETBATDAU ? `Tiết ${item.TIETBATDAU} - ${item.TIETKETTHUC}` : "";
       const hinhThuc = item.THUOCTINH_TEN || "";
 
+      // Gán mã màu chuẩn theo từng môn
+      const color = getSubjectColor(summary);
+
       const desc = `Lớp: ${tenLop}\\nGiảng viên: ${gv}\\nThời gian: ${tiet} (${hinhThuc})\\nPhenikaa Schedule Dispatcher by Ziet`;
 
       events.push([
@@ -53,6 +79,10 @@ const PKAIcs = (function () {
         `SUMMARY:${summary}`,
         `LOCATION:${location}`,
         `DESCRIPTION:${desc}`,
+        `CATEGORIES:${summary}`,
+        `COLOR:${color.hex}`,
+        `X-COLOR:${color.hex}`,
+        `X-APPLE-CALENDAR-COLOR:${color.hex}`,
         "STATUS:CONFIRMED",
         "END:VEVENT"
       ].join("\r\n"));
@@ -85,6 +115,8 @@ const PKAIcs = (function () {
   }
 
   return {
+    PALETTE,
+    getSubjectColor,
     generateIcs,
     downloadIcsFile
   };
