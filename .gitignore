@@ -1,10 +1,9 @@
 # Dependencies
 node_modules/
 
-# Build and releases
+# Build artifacts
 dist/
-release/*.zip
-*.zip
+
 
 # System files
 .DS_Store
