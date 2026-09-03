@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Build and releases
+dist/
+release/*.zip
+*.zip
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & IDE
+*.log
+npm-debug.log*
+.vscode/
+.idea/

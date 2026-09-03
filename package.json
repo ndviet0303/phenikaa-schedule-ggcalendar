@@ -1,0 +1,19 @@
+{
+  "name": "phenikaa-schedule-dispatcher",
+  "version": "1.3.0",
+  "description": "Chrome/Edge extension to intercept, customize date, and dispatch Phenikaa schedule requests (Aura Court Edition)",
+  "scripts": {
+    "build": "node build.js",
+    "release": "node build.js"
+  },
+  "keywords": [
+    "phenikaa",
+    "schedule",
+    "chrome-extension",
+    "edge-extension",
+    "ics",
+    "dispatcher"
+  ],
+  "author": "Nghiêm Đức Việt (https://ziet.dev)",
+  "license": "MIT"
+}
