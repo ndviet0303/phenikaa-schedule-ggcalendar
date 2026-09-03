@@ -88,6 +88,19 @@ const PKAIcs = (function () {
       ].join("\r\n"));
     });
 
+    const vTimezone = [
+      "BEGIN:VTIMEZONE",
+      "TZID:Asia/Ho_Chi_Minh",
+      "X-LIC-LOCATION:Asia/Ho_Chi_Minh",
+      "BEGIN:STANDARD",
+      "TZOFFSETFROM:+0700",
+      "TZOFFSETTO:+0700",
+      "TZNAME:+07",
+      "DTSTART:19700101T000000",
+      "END:STANDARD",
+      "END:VTIMEZONE"
+    ].join("\r\n");
+
     return [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
@@ -96,6 +109,7 @@ const PKAIcs = (function () {
       "METHOD:PUBLISH",
       "X-WR-CALNAME:Thời Khóa Biểu Phenikaa",
       "X-WR-TIMEZONE:Asia/Ho_Chi_Minh",
+      vTimezone,
       ...events,
       "END:VCALENDAR"
     ].join("\r\n");
