@@ -30,7 +30,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: release/*.zip
+          files: release/phenikaa-schedule-${{ github.ref_name }}.zip
           name: Phenikaa Schedule Dispatcher ${{ github.ref_name }}
           draft: false
           prerelease: false
