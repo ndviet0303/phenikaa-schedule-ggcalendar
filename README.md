@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/version-1.5.1-blue.svg?style=flat-square)](https://github.com/ndviet0303/phenikaa-schedule-ggcalendar/releases)
 [![Manifest](https://img.shields.io/badge/manifest-v3-orange.svg?style=flat-square)](manifest.json)
 [![Platform](https://img.shields.io/badge/platform-Chrome%20%7C%20Edge%20%7C%20Brave-lightgrey.svg?style=flat-square)](#)
-[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey.svg?style=flat-square)](LICENSE)
 
 > Tiện ích mở rộng (Extension) dành cho trình duyệt Chromium (Chrome, Microsoft Edge, Brave, Cốc Cốc).  
 > Tự động trích xuất payload từ cổng đào tạo Phenikaa, tùy biến khoảng thời gian tra cứu, giải mã dữ liệu thời khóa biểu và xuất file `.ics` đồng bộ vào **Google Calendar**, **Apple Calendar** và **Outlook**. Đồng thời hỗ trợ tính năng tự động hoàn thành phiếu khảo sát giảng viên.
@@ -13,7 +13,6 @@
 ## Tính Năng Chính
 
 - **Tự động nhận diện phiên (Zero Config):** Trích xuất `JWT Bearer Token` và `Student ID` trực tiếp từ phiên làm việc trên portal.
-- **Mã hóa & Giải mã 2 chiều:** Tích hợp thuật toán `AE` và `AD` của hệ thống cổng đào tạo Phenikaa (`AzzSystem`).
 - **Giao diện Aura Court:** Thiết kế tối giản, hiện đại lấy cảm hứng từ [court.ziet.dev](https://court.ziet.dev/), hỗ trợ chuyển đổi giao diện Sáng / Tối (Light / Dark mode).
 - **Tùy biến thời gian linh hoạt:** Lọc lịch học theo ngày bất kỳ hoặc chọn nhanh theo tuần (*Tuần này*, *Tuần sau*, *Tuần trước*, *Hôm nay*).
 - **Xuất lịch iCalendar (.ics):** Tạo file `.ics` tuân thủ chuẩn RFC 5545, hỗ trợ đầy đủ múi giờ `Asia/Ho_Chi_Minh`, phòng học, giảng viên và mã màu riêng cho từng môn học.
@@ -29,7 +28,7 @@ Dự án ưu tiên mã nguồn thuần (Vanilla JavaScript), không dùng framew
 - **Manifest V3:** Chuẩn kiến trúc extension mới nhất của Google Chrome và Microsoft Edge.
 - **Feather Icons (SVG):** Thư viện icon mã nguồn mở tối giản, sắc nét và nhẹ nhàng thay vì dùng emoji.
 - **RFC 5545 iCalendar Engine:** Module tự xây dựng sinh file lịch tương thích 100% với Google Calendar và Apple Calendar.
-- **Web Crypto & Bitwise Cipher:** Xử lý giải mã thuật toán XOR cipher 2 chiều.
+- **Crypto Utilities:** Xử lý giải mã gói tin thời khóa biểu an toàn.
 - **Plus Jakarta Sans:** Phông chữ hình học hiện đại từ Google Fonts.
 
 ---
@@ -93,8 +92,8 @@ phenikaa-extension/
 │
 └── src/
     ├── core/                  # Tầng Domain & Thuật toán
-    │   ├── constants.js       # Hằng số, API Endpoint, Action, Candidate Keys
-    │   ├── crypto.js          # Thuật toán mã hóa & giải mã AE / AD
+    │   ├── constants.js       # Hằng số, API Endpoint, Candidate Keys
+    │   ├── crypto.js          # Module xử lý giải mã dữ liệu thời khóa biểu
     │   └── ics.js             # Bộ sinh file iCalendar chuẩn RFC 5545
     │
     ├── services/              # Tầng Dịch vụ ứng dụng
