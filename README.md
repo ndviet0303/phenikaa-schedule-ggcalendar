@@ -20,7 +20,7 @@
 ## 🚀 Hướng Dẫn Cài Đặt
 
 ### Cách 1: Cài đặt từ file bản phát hành (.zip) — *Khuyên dùng cho người dùng*
-1. Tải file **`phenikaa-schedule-v1.5.0.zip`** từ thư mục [`release/`](https://github.com/ndviet0303/phenikaa-schedule-ggcalendar/blob/main/release/phenikaa-schedule-v1.5.0.zip) hoặc trang [Releases](https://github.com/ndviet0303/phenikaa-schedule-ggcalendar/releases).
+1. Tải file **`phenikaa-schedule-v1.5.1.zip`** từ thư mục [`release/`](https://github.com/ndviet0303/phenikaa-schedule-ggcalendar/blob/main/release/phenikaa-schedule-v1.5.1.zip) hoặc trang [Releases](https://github.com/ndviet0303/phenikaa-schedule-ggcalendar/releases).
 2. Giải nén file `.zip` ra một thư mục trên máy tính.
 3. Mở trình duyệt và truy cập vào trang quản lý tiện ích:
    * **Microsoft Edge:** Truy cập `edge://extensions/`
@@ -97,7 +97,7 @@ phenikaa-extension/
 ├── build.js                   # Script đóng gói tự động thành file .zip
 ├── .gitignore
 ├── release/                   # Chứa bản nén phát hành
-│   └── phenikaa-schedule-v1.5.0.zip
+│   └── phenikaa-schedule-v1.5.1.zip
 │
 └── src/
     ├── core/                  # Tầng Domain & Thuật toán thuần
@@ -134,7 +134,7 @@ phenikaa-extension/
 ```bash
 npm run build
 ```
-File đóng gói sẽ được tạo tự động tại `release/phenikaa-schedule-v1.5.0.zip`.
+File đóng gói sẽ được tạo tự động tại `release/phenikaa-schedule-v1.5.1.zip`.
 
 ---
 

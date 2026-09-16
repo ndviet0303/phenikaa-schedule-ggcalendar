@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Phenikaa Schedule Dispatcher",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Tiện ích bắt payload network, tùy biến thời gian và truy vấn lịch học Phenikaa (Aura Court Edition)",
   "permissions": [
     "storage",
