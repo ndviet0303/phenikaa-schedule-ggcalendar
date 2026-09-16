@@ -140,6 +140,50 @@ header {
   transform: scale(1.05);
 }
 
+/* MODE SELECTOR TABS */
+.mode-tabs {
+  display: flex;
+  background: var(--surface);
+  padding: 6px 18px 10px 18px;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.mode-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mode-tab:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.mode-tab.active {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-gold);
+}
+
+.tab-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 /* MAIN */
 main {
   padding: 16px 18px;
@@ -443,4 +487,163 @@ footer {
 
 .btn-dock-toggle:hover {
   color: var(--ink);
+}
+
+/* SURVEY MODULE STYLES */
+.survey-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.survey-rating-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.survey-rating-grid .court-chip {
+  text-align: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.survey-rating-grid .court-chip:last-child {
+  grid-column: span 2;
+}
+
+.survey-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.survey-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.court-text-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.court-text-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(216, 180, 110, 0.15);
+}
+
+.survey-action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.btn-court-secondary {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-court-secondary:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.btn-court-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.survey-status-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.survey-status-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.survey-status-title {
+  font-size: 10.5px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.survey-mini-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.survey-mini-badge.success {
+  background: rgba(74, 222, 128, 0.12);
+  border-color: rgba(74, 222, 128, 0.4);
+  color: #4ade80;
+}
+
+.survey-mini-badge.running {
+  background: rgba(234, 179, 8, 0.15);
+  border-color: rgba(234, 179, 8, 0.4);
+  color: #eab308;
+}
+
+.survey-progress-wrap {
+  width: 100%;
+}
+
+.survey-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--surface-subtle);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.survey-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+.survey-status-msg {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.45;
 }

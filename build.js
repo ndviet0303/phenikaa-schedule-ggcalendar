@@ -46,10 +46,14 @@ if (fs.existsSync(path.join(ROOT_DIR, "README.md"))) {
 // Copy thư mục src
 copyRecursive(path.join(ROOT_DIR, "src"), path.join(tempDist, "src"));
 
-// Sử dụng PowerShell Compress-Archive trên Windows
+// Đóng gói zip đa nền tảng (hỗ trợ Windows, macOS, Linux)
 try {
-  const psCmd = `powershell -Command "Compress-Archive -Path '${tempDist}\\*' -DestinationPath '${zipPath}' -Force"`;
-  execSync(psCmd, { stdio: "inherit" });
+  if (process.platform === "win32") {
+    const psCmd = `powershell -Command "Compress-Archive -Path '${tempDist}\\*' -DestinationPath '${zipPath}' -Force"`;
+    execSync(psCmd, { stdio: "inherit" });
+  } else {
+    execSync(`cd "${tempDist}" && zip -r "${zipPath}" ./*`, { stdio: "inherit" });
+  }
   console.log(`✅ Bản phát hành đã tạo thành công tại:`);
   console.log(`👉 ${zipPath}`);
 } catch (err) {

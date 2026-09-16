@@ -13,13 +13,14 @@
 * 📆 **Tùy biến ngày linh hoạt:** Tra cứu theo ngày cụ thể hoặc chọn nhanh bằng các chip: *Tuần này*, *Tuần sau*, *Tuần trước*, *Hôm nay*.
 * 📥 **Xuất file chuẩn iCalendar (.ics):** Tải về lịch học chi tiết gồm tên môn, mã lớp, phòng học, giảng viên, tiết học và giờ bắt đầu/kết thúc chính xác theo múi giờ `Asia/Ho_Chi_Minh`.
 * 📌 **Dock Widget trên trang:** Tích hợp một nút bấm tròn nổi gọn gàng ở góc trái màn hình portal, bấm là bung bảng điều khiển ngay trên trang web mà không cần mở popup.
+* ✍️ **Auto Tick Khảo Sát:** Tự động hoàn thành phiếu khảo sát ý kiến giảng viên/học phần ("Đồng ý", "Hoàn toàn đồng ý", hoặc "Ngẫu nhiên"), tự điền ý kiến đóng góp và tự động duyệt nộp toàn bộ 1-Click.
 
 ---
 
 ## 🚀 Hướng Dẫn Cài Đặt
 
 ### Cách 1: Cài đặt từ file bản phát hành (.zip) — *Khuyên dùng cho người dùng*
-1. Tải file **`phenikaa-schedule-v1.4.0.zip`** từ thư mục [`release/`](https://github.com/ndviet0303/phenikaa-schedule-ggcalendar/blob/main/release/phenikaa-schedule-v1.4.0.zip) hoặc trang [Releases](https://github.com/ndviet0303/phenikaa-schedule-ggcalendar/releases).
+1. Tải file **`phenikaa-schedule-v1.5.0.zip`** từ thư mục [`release/`](https://github.com/ndviet0303/phenikaa-schedule-ggcalendar/blob/main/release/phenikaa-schedule-v1.5.0.zip) hoặc trang [Releases](https://github.com/ndviet0303/phenikaa-schedule-ggcalendar/releases).
 2. Giải nén file `.zip` ra một thư mục trên máy tính.
 3. Mở trình duyệt và truy cập vào trang quản lý tiện ích:
    * **Microsoft Edge:** Truy cập `edge://extensions/`
@@ -96,7 +97,7 @@ phenikaa-extension/
 ├── build.js                   # Script đóng gói tự động thành file .zip
 ├── .gitignore
 ├── release/                   # Chứa bản nén phát hành
-│   └── phenikaa-schedule-v1.4.0.zip
+│   └── phenikaa-schedule-v1.5.0.zip
 │
 └── src/
     ├── core/                  # Tầng Domain & Thuật toán thuần
@@ -107,6 +108,7 @@ phenikaa-extension/
     ├── services/              # Tầng Dịch vụ ứng dụng
     │   ├── auth-service.js    # Quét & phân tích JWT Bearer Token, Student ID
     │   ├── schedule-service.js# Khởi tạo payload & gọi API lấy lịch học
+    │   ├── survey-service.js  # Tự động hóa khảo sát & điều khiển nộp phiếu
     │   └── storage-service.js # Quản lý bộ nhớ đệm & Chrome Storage
     │
     ├── ui/                    # Tầng Giao diện người dùng
@@ -132,7 +134,7 @@ phenikaa-extension/
 ```bash
 npm run build
 ```
-File đóng gói sẽ được tạo tự động tại `release/phenikaa-schedule-v1.4.0.zip`.
+File đóng gói sẽ được tạo tự động tại `release/phenikaa-schedule-v1.5.0.zip`.
 
 ---
 

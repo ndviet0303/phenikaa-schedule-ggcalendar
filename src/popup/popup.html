@@ -35,82 +35,165 @@
     </div>
   </header>
 
+  <!-- MODE SELECTOR TABS -->
+  <div class="mode-tabs">
+    <button id="tabSchedule" class="mode-tab active" type="button">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+      </svg>
+      <span>Lấy Lịch Học</span>
+    </button>
+    <button id="tabSurvey" class="mode-tab" type="button">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+      </svg>
+      <span>Auto Tick Khảo Sát</span>
+    </button>
+  </div>
+
   <main>
-    <!-- DATE SELECTION -->
-    <div class="date-grid">
-      <div class="date-field">
-        <label class="field-label">Từ ngày</label>
-        <div class="date-input-wrap">
-          <svg class="date-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-          </svg>
-          <input type="date" id="popStart" class="court-date-input" />
-        </div>
-      </div>
-      <div class="date-field">
-        <label class="field-label">Đến ngày</label>
-        <div class="date-input-wrap">
-          <svg class="date-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-          </svg>
-          <input type="date" id="popEnd" class="court-date-input" />
-        </div>
-      </div>
-    </div>
-
-    <!-- QUICK WEEK CHIPS -->
-    <div class="chips-carousel">
-      <div class="court-chip active" id="chipThisWeek">Tuần này</div>
-      <div class="court-chip" id="chipNextWeek">Tuần sau</div>
-      <div class="court-chip" id="chipPrevWeek">Tuần trước</div>
-      <div class="court-chip" id="chipToday">Hôm nay</div>
-    </div>
-
-    <!-- PRIMARY ACTION -->
-    <div class="action-group">
-      <button id="btnFetch" class="btn-court-primary" disabled>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"></line>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-        </svg>
-        <span>Truy Vấn Lịch Học</span>
-      </button>
-    </div>
-
-    <!-- RESULTS SECTION -->
-    <div class="results-wrap">
-      <div class="results-head">
-        <span class="results-title" id="resultsTitle">Thời khóa biểu</span>
-        <div class="results-actions">
-          <button id="btnExportIcs" class="btn-mini" style="display:none;" title="Xuất file lịch cho Google / Apple Calendar">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
+    <!-- SECTION 1: LẤY LỊCH HỌC -->
+    <section id="sectionSchedule" class="tab-pane active">
+      <!-- DATE SELECTION -->
+      <div class="date-grid">
+        <div class="date-field">
+          <label class="field-label">Từ ngày</label>
+          <div class="date-input-wrap">
+            <svg class="date-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
-            <span>Xuất .ics</span>
-          </button>
-          <button id="btnCopyJson" class="btn-mini" style="display:none;">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            <input type="date" id="popStart" class="court-date-input" />
+          </div>
+        </div>
+        <div class="date-field">
+          <label class="field-label">Đến ngày</label>
+          <div class="date-input-wrap">
+            <svg class="date-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
-            <span>Copy JSON</span>
-          </button>
+            <input type="date" id="popEnd" class="court-date-input" />
+          </div>
         </div>
       </div>
-      <div id="resultsBox" class="results-container">
-        <div class="empty-state">
-          Đang kết nối phiên sinh viên...
+
+      <!-- QUICK WEEK CHIPS -->
+      <div class="chips-carousel">
+        <div class="court-chip active" id="chipThisWeek">Tuần này</div>
+        <div class="court-chip" id="chipNextWeek">Tuần sau</div>
+        <div class="court-chip" id="chipPrevWeek">Tuần trước</div>
+        <div class="court-chip" id="chipToday">Hôm nay</div>
+      </div>
+
+      <!-- PRIMARY ACTION -->
+      <div class="action-group">
+        <button id="btnFetch" class="btn-court-primary" disabled>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+          <span>Truy Vấn Lịch Học</span>
+        </button>
+      </div>
+
+      <!-- RESULTS SECTION -->
+      <div class="results-wrap">
+        <div class="results-head">
+          <span class="results-title" id="resultsTitle">Thời khóa biểu</span>
+          <div class="results-actions">
+            <button id="btnExportIcs" class="btn-mini" style="display:none;" title="Xuất file lịch cho Google / Apple Calendar">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Xuất .ics</span>
+            </button>
+            <button id="btnCopyJson" class="btn-mini" style="display:none;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy JSON</span>
+            </button>
+          </div>
+        </div>
+        <div id="resultsBox" class="results-container">
+          <div class="empty-state">
+            Đang kết nối phiên sinh viên...
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- SECTION 2: AUTO TICK KHẢO SÁT -->
+    <section id="sectionSurvey" class="tab-pane" style="display:none;">
+      <!-- RATING MODE -->
+      <div class="survey-group">
+        <label class="field-label">Mức độ đánh giá</label>
+        <div class="survey-rating-grid">
+          <div class="court-chip active" id="chipRatingAgree" data-mode="agree">⭐ Đồng ý (4/5)</div>
+          <div class="court-chip" id="chipRatingStrong" data-mode="strongly_agree">🌟 Hoàn toàn đồng ý (5/5)</div>
+          <div class="court-chip" id="chipRatingRandom" data-mode="random">🎲 Ngẫu nhiên (80/20)</div>
+        </div>
+      </div>
+
+      <!-- FEEDBACK INPUTS -->
+      <div class="survey-inputs">
+        <div class="survey-field">
+          <label class="field-label">Ý kiến về hoạt động giảng dạy</label>
+          <input type="text" id="surveyFeedback" class="court-text-input" value="Nội dung bài giảng rõ ràng, giảng dạy tốt." placeholder="Nhập ý kiến..." />
+        </div>
+        <div class="survey-field">
+          <label class="field-label">Đề xuất đối với giảng viên</label>
+          <input type="text" id="surveySuggestion" class="court-text-input" value="Không có đề xuất gì thêm." placeholder="Nhập đề xuất..." />
+        </div>
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="survey-action-grid">
+        <button id="btnSurveyCurrent" class="btn-court-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Auto Tick Phiếu Này</span>
+        </button>
+        <button id="btnSurveyAll" class="btn-court-secondary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span id="btnSurveyAllText">Auto Toàn Bộ Phiếu</span>
+        </button>
+      </div>
+
+      <!-- STATUS & PROGRESS -->
+      <div class="survey-status-card">
+        <div class="survey-status-head">
+          <span class="survey-status-title">Tiến trình khảo sát</span>
+          <span id="surveyBadge" class="survey-mini-badge">Sẵn sàng</span>
+        </div>
+        <div id="surveyProgressWrap" class="survey-progress-wrap" style="display:none;">
+          <div class="survey-progress-bar">
+            <div id="surveyProgressBar" class="survey-progress-fill" style="width:0%;"></div>
+          </div>
+        </div>
+        <div id="surveyStatusMsg" class="survey-status-msg">
+          Mở trang khảo sát Phenikaa để sử dụng tính năng auto tick.
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -140,6 +223,7 @@
   <script src="../services/storage-service.js"></script>
   <script src="../services/auth-service.js"></script>
   <script src="../services/schedule-service.js"></script>
+  <script src="../services/survey-service.js"></script>
   <script src="../ui/theme.js"></script>
   <script src="popup.js"></script>
 </body>

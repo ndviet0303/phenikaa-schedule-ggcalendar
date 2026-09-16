@@ -8,6 +8,11 @@ window.addEventListener("message", (event) => {
       pka_key: event.data.key,
       pka_time: new Date().toLocaleTimeString()
     });
+  } else if (event.data && event.data.type === "PKA_SURVEY_PROGRESS") {
+    chrome.runtime.sendMessage({
+      action: "SURVEY_PROGRESS_UPDATE",
+      progress: event.data.progress
+    }).catch(() => {});
   }
 });
 

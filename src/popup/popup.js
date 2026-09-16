@@ -18,6 +18,30 @@ document.addEventListener("DOMContentLoaded", async () => {
   let activeKey = PKA_CONSTANTS.CANDIDATE_KEYS[0];
   let lastDecryptedList = [];
 
+  // 0. TAB SWITCHER (LẤY LỊCH & AUTO KHẢO SÁT)
+  const tabSchedule = document.getElementById("tabSchedule");
+  const tabSurvey = document.getElementById("tabSurvey");
+  const sectionSchedule = document.getElementById("sectionSchedule");
+  const sectionSurvey = document.getElementById("sectionSurvey");
+
+  function switchTab(tabName) {
+    if (tabName === "schedule") {
+      tabSchedule.classList.add("active");
+      tabSurvey.classList.remove("active");
+      sectionSchedule.style.display = "flex";
+      sectionSurvey.style.display = "none";
+    } else {
+      tabSurvey.classList.add("active");
+      tabSchedule.classList.remove("active");
+      sectionSurvey.style.display = "flex";
+      sectionSchedule.style.display = "none";
+      checkSurveyPageStatus();
+    }
+  }
+
+  tabSchedule.onclick = () => switchTab("schedule");
+  tabSurvey.onclick = () => switchTab("survey");
+
   // 1. THEME MANAGEMENT
   function updateThemeIcons(theme) {
     iconSun.style.display = theme === "light" ? "block" : "none";
@@ -295,4 +319,231 @@ document.addEventListener("DOMContentLoaded", async () => {
       chrome.tabs.sendMessage(tab.id, { action: "TOGGLE_PKA_WIDGET" });
     }
   };
+
+  // 8. AUTO TICK KHẢO SÁT LOGIC
+  let selectedRatingMode = "agree";
+  const chipAgree = document.getElementById("chipRatingAgree");
+  const chipStrong = document.getElementById("chipRatingStrong");
+  const chipRandom = document.getElementById("chipRatingRandom");
+  const ratingChips = [
+    { el: chipAgree, mode: "agree" },
+    { el: chipStrong, mode: "strongly_agree" },
+    { el: chipRandom, mode: "random" }
+  ];
+
+  ratingChips.forEach((item) => {
+    if (item.el) {
+      item.el.onclick = () => {
+        ratingChips.forEach((c) => c.el?.classList.remove("active"));
+        item.el.classList.add("active");
+        selectedRatingMode = item.mode;
+      };
+    }
+  });
+
+  const btnSurveyCurrent = document.getElementById("btnSurveyCurrent");
+  const btnSurveyAll = document.getElementById("btnSurveyAll");
+  const btnSurveyAllText = document.getElementById("btnSurveyAllText");
+  const surveyBadge = document.getElementById("surveyBadge");
+  const surveyStatusMsg = document.getElementById("surveyStatusMsg");
+  const surveyProgressWrap = document.getElementById("surveyProgressWrap");
+  const surveyProgressBar = document.getElementById("surveyProgressBar");
+  const surveyFeedback = document.getElementById("surveyFeedback");
+  const surveySuggestion = document.getElementById("surveySuggestion");
+
+  async function checkSurveyPageStatus() {
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (!tab || !tab.url || !tab.url.includes("phenikaa-uni.edu.vn")) {
+        surveyBadge.textContent = "Ngoài Portal";
+        surveyBadge.className = "survey-mini-badge";
+        surveyStatusMsg.textContent = "Hãy mở trang portal sinh viên Phenikaa để sử dụng.";
+        btnSurveyCurrent.disabled = true;
+        btnSurveyAll.disabled = true;
+        return;
+      }
+
+      if (!tab.url.includes("thuchienkhaosat.aspx")) {
+        surveyBadge.textContent = "Chưa vào khảo sát";
+        surveyBadge.className = "survey-mini-badge";
+        surveyStatusMsg.innerHTML = "Bạn đang ở trang khác. Hãy vào mục <strong>Khảo sát ý kiến</strong> trên portal để sử dụng.";
+        btnSurveyCurrent.disabled = true;
+        btnSurveyAll.disabled = true;
+        return;
+      }
+
+      // Đang ở trang khảo sát: Lấy số lượng phiếu
+      const res = await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        world: "MAIN",
+        func: () => {
+          if (typeof PKASurvey !== "undefined") {
+            return {
+              isSurvey: PKASurvey.isSurveyPage(),
+              stats: PKASurvey.getSurveyStats(),
+              isRunning: PKASurvey.isRunning()
+            };
+          }
+          return null;
+        }
+      });
+
+      if (res && res[0]?.result) {
+        const { stats, isRunning } = res[0].result;
+        btnSurveyCurrent.disabled = false;
+        btnSurveyAll.disabled = false;
+
+        if (isRunning) {
+          surveyBadge.textContent = "Đang chạy...";
+          surveyBadge.className = "survey-mini-badge running";
+          btnSurveyAllText.textContent = "Dừng Lại (Stop)";
+          surveyProgressWrap.style.display = "block";
+        } else if (stats && stats.total > 0) {
+          surveyBadge.textContent = `${stats.completed}/${stats.total} Đã xong`;
+          surveyBadge.className = "survey-mini-badge " + (stats.pending === 0 ? "success" : "");
+          btnSurveyAllText.textContent = stats.pending > 0 ? `Auto Toàn Bộ (${stats.pending} phiếu)` : "Auto Toàn Bộ Phiếu";
+          surveyStatusMsg.textContent = stats.pending === 0
+            ? "Tất cả phiếu khảo sát đều đã hoàn thành!"
+            : `Tìm thấy ${stats.total} phiếu (${stats.pending} phiếu chưa hoàn thành). Sẵn sàng auto tick!`;
+        } else {
+          surveyBadge.textContent = "Sẵn sàng";
+          surveyBadge.className = "survey-mini-badge";
+          surveyStatusMsg.textContent = "Đã kết nối trang khảo sát. Bấm nút bên dưới để thực hiện.";
+        }
+      }
+    } catch (e) {
+      console.warn("Survey status check error:", e);
+    }
+  }
+
+  // Tự động chuyển sang tab khảo sát nếu tab hiện tại là trang khảo sát
+  chrome.tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
+    if (tab && tab.url && tab.url.includes("thuchienkhaosat.aspx")) {
+      switchTab("survey");
+    }
+  });
+
+  // Xử lý nút Auto Tick phiếu hiện tại
+  btnSurveyCurrent.onclick = async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab || !tab.id) return;
+
+    btnSurveyCurrent.disabled = true;
+    surveyBadge.textContent = "Đang tick...";
+    surveyBadge.className = "survey-mini-badge running";
+
+    const options = {
+      ratingMode: selectedRatingMode,
+      feedbackText: surveyFeedback.value.trim() || "Nội dung bài giảng rõ ràng, giảng dạy tốt.",
+      suggestionText: surveySuggestion.value.trim() || "Không có đề xuất gì thêm."
+    };
+
+    try {
+      const execRes = await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        world: "MAIN",
+        func: (opts) => {
+          if (typeof PKASurvey !== "undefined") {
+            return PKASurvey.tickCurrent(opts);
+          }
+          return { success: false, message: "Chưa nạp được module PKASurvey trên trang." };
+        },
+        args: [options]
+      });
+
+      const result = execRes && execRes[0]?.result;
+      if (result?.success) {
+        surveyBadge.textContent = "Thành công";
+        surveyBadge.className = "survey-mini-badge success";
+        surveyStatusMsg.textContent = `✅ ${result.message}`;
+      } else {
+        surveyBadge.textContent = "Lỗi";
+        surveyBadge.className = "survey-mini-badge";
+        surveyStatusMsg.textContent = `⚠️ ${result?.message || "Không thể tick phiếu này. Hãy đảm bảo phiếu đang mở!"}`;
+      }
+    } catch (err) {
+      surveyStatusMsg.textContent = `Lỗi: ${err.message}`;
+    } finally {
+      btnSurveyCurrent.disabled = false;
+    }
+  };
+
+  // Xử lý nút Auto toàn bộ phiếu
+  btnSurveyAll.onclick = async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab || !tab.id) return;
+
+    // Kiểm tra nếu đang chạy thì chuyển thành nút Dừng lại
+    const statusRes = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      world: "MAIN",
+      func: () => typeof PKASurvey !== "undefined" && PKASurvey.isRunning()
+    });
+
+    if (statusRes && statusRes[0]?.result) {
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        world: "MAIN",
+        func: () => {
+          if (typeof PKASurvey !== "undefined") PKASurvey.stopAll();
+        }
+      });
+      btnSurveyAllText.textContent = "Auto Toàn Bộ Phiếu";
+      surveyBadge.textContent = "Đã dừng";
+      surveyBadge.className = "survey-mini-badge";
+      surveyStatusMsg.textContent = "Đã gửi yêu cầu dừng tiến trình tự động.";
+      return;
+    }
+
+    const options = {
+      ratingMode: selectedRatingMode,
+      feedbackText: surveyFeedback.value.trim() || "Nội dung bài giảng rõ ràng, giảng dạy tốt.",
+      suggestionText: surveySuggestion.value.trim() || "Không có đề xuất gì thêm."
+    };
+
+    surveyProgressWrap.style.display = "block";
+    surveyProgressBar.style.width = "0%";
+    surveyBadge.textContent = "Đang chạy...";
+    surveyBadge.className = "survey-mini-badge running";
+    btnSurveyAllText.textContent = "Dừng Lại (Stop)";
+
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      world: "MAIN",
+      func: (opts) => {
+        if (typeof PKASurvey !== "undefined") {
+          PKASurvey.runAll(opts, (progress) => {
+            window.postMessage({ type: "PKA_SURVEY_PROGRESS", progress }, "*");
+          });
+        }
+      },
+      args: [options]
+    });
+  };
+
+  // Nhận thông báo tiến trình từ trang web
+  chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.action === "SURVEY_PROGRESS_UPDATE" && msg.progress) {
+      const p = msg.progress;
+      if (p.total && p.current) {
+        const pct = Math.round((p.current / p.total) * 100);
+        surveyProgressBar.style.width = `${pct}%`;
+      }
+      if (p.message) surveyStatusMsg.textContent = p.message;
+      if (p.stage === "finished") {
+        surveyBadge.textContent = "Hoàn tất";
+        surveyBadge.className = "survey-mini-badge success";
+        btnSurveyAllText.textContent = "Auto Toàn Bộ Phiếu";
+        setTimeout(() => {
+          surveyProgressWrap.style.display = "none";
+          checkSurveyPageStatus();
+        }, 3000);
+      } else if (p.stage === "aborted") {
+        surveyBadge.textContent = "Đã dừng";
+        surveyBadge.className = "survey-mini-badge";
+        btnSurveyAllText.textContent = "Auto Toàn Bộ Phiếu";
+      }
+    }
+  });
 });
+

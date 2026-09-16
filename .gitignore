@@ -15,3 +15,7 @@ desktop.ini
 npm-debug.log*
 .vscode/
 .idea/
+.agent/
+.agents/
+.omp/
+openspec/
