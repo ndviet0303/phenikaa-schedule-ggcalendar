@@ -259,9 +259,9 @@
             <div class="w-survey-group">
               <label class="w-field-label">Mức độ đánh giá</label>
               <div class="w-survey-rating-grid">
-                <span class="w-chip active" id="wChipRatingAgree" data-mode="agree">⭐ Đồng ý (4/5)</span>
-                <span class="w-chip" id="wChipRatingStrong" data-mode="strongly_agree">🌟 Hoàn toàn đồng ý (5/5)</span>
-                <span class="w-chip" id="wChipRatingRandom" data-mode="random">🎲 Ngẫu nhiên (80/20)</span>
+                <span class="w-chip active" id="wChipRatingAgree" data-mode="agree">Đồng ý (4/5)</span>
+                <span class="w-chip" id="wChipRatingStrong" data-mode="strongly_agree">Hoàn toàn đồng ý (5/5)</span>
+                <span class="w-chip" id="wChipRatingRandom" data-mode="random">Ngẫu nhiên (80/20)</span>
               </div>
             </div>
 
@@ -581,9 +581,9 @@
             wBadgeSurv.textContent = "Thành công";
             wBadgeSurv.className = "w-survey-badge success";
           }
-          if (wMsgSurv) wMsgSurv.textContent = `✅ ${res.message}`;
+          if (wMsgSurv) wMsgSurv.textContent = res.message;
         } else {
-          if (wMsgSurv) wMsgSurv.textContent = `⚠️ ${res.message}`;
+          if (wMsgSurv) wMsgSurv.textContent = res.message;
         }
       };
     }

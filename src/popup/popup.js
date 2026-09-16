@@ -455,11 +455,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (result?.success) {
         surveyBadge.textContent = "Thành công";
         surveyBadge.className = "survey-mini-badge success";
-        surveyStatusMsg.textContent = `✅ ${result.message}`;
+        surveyStatusMsg.textContent = result.message;
       } else {
         surveyBadge.textContent = "Lỗi";
         surveyBadge.className = "survey-mini-badge";
-        surveyStatusMsg.textContent = `⚠️ ${result?.message || "Không thể tick phiếu này. Hãy đảm bảo phiếu đang mở!"}`;
+        surveyStatusMsg.textContent = result?.message || "Không thể tick phiếu này. Hãy đảm bảo phiếu đang mở!";
       }
     } catch (err) {
       surveyStatusMsg.textContent = `Lỗi: ${err.message}`;
